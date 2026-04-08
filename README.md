@@ -75,38 +75,38 @@ The VGP pipeline follows a modular structure with multiple quality control check
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
 │  INPUT DATA                                                     │
-│  ├── PacBio HiFi reads (3 FASTA files, 50x coverage)           │
-│  ├── Illumina Hi-C reads (Forward + Reverse)                   │
-│  └── Bionano optical maps (CMAP format)                        │
+│  ├── PacBio HiFi reads (3 FASTA files, 50x coverage)            |
+│  ├── Illumina Hi-C reads (Forward + Reverse)                    │
+│  └── Bionano optical maps (CMAP format)                         │
 │                                                                 │
-│  STAGE 1: HiFi READ PREPROCESSING                              │
-│  └── Cutadapt → Remove adapter-containing reads                │
+│  STAGE 1: HiFi READ PREPROCESSING                               │
+│  └── Cutadapt → Remove adapter-containing reads                 │
 │                                                                 │
 │  STAGE 2: GENOME PROFILING                                      │
-│  ├── Meryl → K-mer counting (k=31)                             │
-│  └── GenomeScope2 → Estimate genome size, heterozygosity       │
+│  ├── Meryl → K-mer counting (k=31)                              │
+│  └── GenomeScope2 → Estimate genome size, heterozygosity        │
 │                                                                 │
 │  STAGE 3: CONTIG ASSEMBLY                                       │
-│  └── Hifiasm (Hi-C mode) → Hap1 + Hap2 phased contigs         │
+│  └── Hifiasm (Hi-C mode) → Hap1 + Hap2 phased contigs           │
 │                                                                 │
 │  STAGE 4: ASSEMBLY QUALITY CONTROL                              │
-│  ├── gfastats → Assembly statistics (N50, contig count, etc.)  │
-│  ├── BUSCO → Gene completeness assessment                      │
-│  └── Merqury → K-mer based quality value (QV)                 │
+│  ├── gfastats → Assembly statistics (N50, contig count, etc.)   │
+│  ├── BUSCO → Gene completeness assessment                       │
+│  └── Merqury → K-mer based quality value (QV)                   │
 │                                                                 │
 │  STAGE 5: BIONANO SCAFFOLDING                                   │
-│  └── Bionano Hybrid Scaffold → Optical map integration         │
+│  └── Bionano Hybrid Scaffold → Optical map integration          │
 │                                                                 │
 │  STAGE 6: HI-C SCAFFOLDING                                      │
-│  ├── BWA-MEM2 → Map Hi-C reads to assembly                     │
-│  ├── Filter and merge → Process chimeric reads                 │
-│  ├── PretextMap → Generate Hi-C contact map (pre-YaHS)        │
-│  ├── YaHS → Chromosome-level scaffolding                       │
-│  ├── BWA-MEM2 → Remap Hi-C reads to final scaffolds           │
-│  └── PretextMap + Pretext Snapshot → Final contact map         │
+│  ├── BWA-MEM2 → Map Hi-C reads to assembly                      │
+│  ├── Filter and merge → Process chimeric reads                  │
+│  ├── PretextMap → Generate Hi-C contact map (pre-YaHS)          │
+│  ├── YaHS → Chromosome-level scaffolding                        │
+│  ├── BWA-MEM2 → Remap Hi-C reads to final scaffolds             │
+│  └── PretextMap + Pretext Snapshot → Final contact map          │
 │                                                                 │
 │  OUTPUT                                                         │
-│  └── Chromosome-level haplotype-phased genome assembly         │
+│  └── Chromosome-level haplotype-phased genome assembly          │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -275,36 +275,36 @@ Standard paired-end aligners assume a known insert size distribution. Hi-C ligat
 ```
 VGP-Genome-Assembly-Pipeline/
 │
-├── README.md                          ← This file
+├── README.md                          
 │
 ├── workflow/
-│   └── VGP_assembly.ga                ← Galaxy workflow (importable)
+│   └── VGP_assembly.ga                
 │
 ├── results/
 │   ├── genomescope/
-│   │   ├── HiFi_synthetic_50x_01.png  ← Linear k-mer plot (sample 1)
-│   │   ├── HiFi_synthetic_50x_02.png  ← Linear k-mer plot (sample 2)
-│   │   ├── HiFi_synthetic_50x_03.png  ← Linear k-mer plot (sample 3)
-│   │   └── *.txt                      ← GenomeScope summary files
+│   │   ├── HiFi_synthetic_50x_01.png  
+│   │   ├── HiFi_synthetic_50x_02.png  
+│   │   ├── HiFi_synthetic_50x_03.png  
+│   │   └── *.txt                      
 │   │
 │   ├── busco/
-│   │   ├── busco_hap1_summary.png     ← BUSCO bar chart for hap1
-│   │   ├── busco_hap1_summary.txt     ← BUSCO text summary for hap1
-│   │   └── busco_hap2_summary.png     ← BUSCO bar chart for hap2
+│   │   ├── busco_hap1_summary.png     
+│   │   ├── busco_hap1_summary.txt     
+│   │   └── busco_hap2_summary.png     
 │   │
 │   ├── merqury/
-│   │   ├── spectra_cn_plot.png        ← Copy number spectrum
-│   │   └── spectra_asm_plot.png       ← Assembly spectrum
+│   │   ├── spectra_cn_plot.png       
+│   │   └── spectra_asm_plot.png      
 │   │
 │   ├── gfastats/
-│   │   └── hap1_hap2_stats.txt        ← Assembly statistics table
+│   │   └── hap1_hap2_stats.txt        
 │   │
 │   └── pretext/
-│       ├── contact_map_before_yahs.png ← Hi-C map before scaffolding
-│       └── contact_map_after_yahs.png  ← Hi-C map after scaffolding
+│       ├── contact_map_before_yahs.png 
+│       └── contact_map_after_yahs.png 
 │
 └── docs/
-    └── methods.md                     ← Detailed step-by-step methods
+    └── methods.md                    
 ```
 
 ---
@@ -373,22 +373,6 @@ For detailed step-by-step guidance, refer to the official GTN tutorial:
 
 ---
 
-## 11. References
 
-1. Rhie, A., et al. (2021). Towards complete and error-free genome assemblies of all vertebrate species. *Nature*, 592, 737–746.
-2. Cheng, H., et al. (2021). Haplotype-resolved de novo assembly using phased assembly graphs with hifiasm. *Nature Methods*, 18, 170–175.
-3. Zhou, C., et al. (2022). YaHS: yet another Hi-C scaffolding tool. *Bioinformatics*, 39(1).
-4. Ranallo-Benavidez, T. R., et al. (2020). GenomeScope 2.0 and Smudgeplots for reference-free profiling of polyploid genomes. *Nature Communications*, 11, 1432.
-5. Rhie, A., et al. (2020). Merqury: reference-free quality, completeness, and phasing assessment for genome assemblies. *Genome Biology*, 21, 245.
-6. Simão, F. A., et al. (2015). BUSCO: assessing genome assembly and annotation completeness with single-copy orthologs. *Bioinformatics*, 31(19), 3210–3212.
-7. Formenti, G., et al. (2022). Gfastats: conversion, evaluation and manipulation of genome sequences using assembly graphs. *Bioinformatics*, 38(17).
-8. Wenger, A. M., et al. (2019). Accurate circular consensus long-read sequencing improves variant detection and assembly of a human genome. *Nature Biotechnology*, 37, 1155–1162.
-
----
-
-## Author
-**Abid Hussain**  
-Bioinformatics Pipeline Implementation  
-Vertebrate Genome Project Tutorial - Galaxy Training Network  
 April 2026
 EOF
